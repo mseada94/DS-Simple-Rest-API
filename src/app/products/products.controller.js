@@ -1,4 +1,3 @@
-const express = require('express');
 const Joi = require('joi');
 const service = require('./products.service');
 const schemas = require('./schemas');

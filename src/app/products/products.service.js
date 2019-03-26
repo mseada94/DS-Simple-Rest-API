@@ -1,4 +1,5 @@
 const document = 'products';
+
 const create = async function createFn(dbAdapter, data, query){
     try {
         const result = await dbAdapter.insert(document, data);
