@@ -35,6 +35,17 @@ module.exports = function mongoAdapter(dbUrl, dbName){
         }
     }
 
+    const replace = async function replaceDocument(collection, id, data){
+        try {
+            const result = await db.collection(collection)
+                .findOneAndReplace({_id: new ObjectID(id)}, data, {returnOriginal: false});
+            
+            return result.value;
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
     const remove = async function removeDocument(collection, id){
         try {
             const result = await db.collection(collection)
@@ -73,6 +84,7 @@ module.exports = function mongoAdapter(dbUrl, dbName){
         connect,
         close,
         insert,
+        replace,
         update,
         remove,
         get,

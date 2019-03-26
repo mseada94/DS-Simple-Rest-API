@@ -10,5 +10,5 @@ npm i mongodb
 ```
 ## Install Some Utils
 ```
-npm i dotenv
+npm i dotenv joi
 ```
