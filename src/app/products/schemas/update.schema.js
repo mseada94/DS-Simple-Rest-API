@@ -5,6 +5,7 @@ const updateSchema = Joi.object().keys({
     description: Joi.string(),
     quantity: Joi.number().integer().min(0),
     discount: Joi.number().min(0).max(99),
+    price: Joi.number().min(0),
     spec: Joi.object()
 });
 

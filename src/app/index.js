@@ -1,10 +1,10 @@
-const path = require('path');
 const express = require('express');
 const compress = require('compression');
 const helmet = require('helmet');
 const cors = require('cors');
 
 const products = require('./products');
+//const orders = require('./orders');
 
 const responseFormater = require('./util/response.Formater');
 
@@ -28,9 +28,11 @@ module.exports =  function app(port, dbAdapter, publicDir) {
         res.locals.dbAdapter = dbAdapter;
         next();
     })
+    
     // Expose Routes for app components
     const root = express.Router();
     root.use(products);
+    //root.use(orders);
     server.use('/api', root);
 
     // MiddleWares
