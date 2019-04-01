@@ -6,7 +6,7 @@ const cors = require('cors');
 const products = require('./products');
 //const orders = require('./orders');
 
-const responseFormater = require('./util/response.Formater');
+const responseFormater = require('./util/response.formater');
 
 module.exports =  function app(port, dbAdapter, publicDir) {
     const server = express();
