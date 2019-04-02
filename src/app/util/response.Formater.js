@@ -9,26 +9,22 @@ module.exports = function responseFormater(req, res, next)  {
         // Error
         let status,msg;
 
-        switch (res.locals.error) {
+        switch (res.locals.error.type) {
             case errors.BAD_REQUEST:
                 status = 400;
-                msg = 'Bad Request';
+                msg = res.locals.error.msg;
                 break;
             case errors.UNAUTHORIZED:
                 status = 401;
-                msg = 'Unauthorized Access';
+                msg = res.locals.error.msg;
                 break;
             case errors.NOT_FOUND:
                 status = 404;
-                msg = 'Resource is not found';
+                msg = res.locals.error.msg;
                 break;
             case errors.SERVER_ERROR:
                 status = 500;
-                msg = 'Internal Server Error';
-                break;
-            case errors.RESOURCE_DUPLICATED:
-                status = 400;
-                msg = 'Resource is Duplicated';
+                msg = res.locals.error.msg;
                 break;
             default:
                 status = 500;

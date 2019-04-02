@@ -6,7 +6,10 @@ module.exports = function roles(...allowed) {
     // return a middleware
     return (req, res, next) => {
       if (!req.user || !isAllowed(req.user.role))
-      res.locals.error = errors.UNAUTHORIZED;  
+      res.locals.error =  {
+        type: errors.UNAUTHORIZED,
+        msg: 'Unauthorized Access: your role does not has the right privalige'
+    };
       next();
     }
     

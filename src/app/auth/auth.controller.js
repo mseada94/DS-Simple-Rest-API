@@ -20,16 +20,25 @@ const login = (req, res, next) => {
                         res.locals.status = 200;
                         res.locals.data = result;
                     }else{
-                        res.locals.error =  errors.UNAUTHORIZED;
+                        res.locals.error =  {
+                            type: errors.UNAUTHORIZED,
+                            msg: 'Invalid username and password!'
+                        };
                     }
                     next();
                 }).catch(err => {
-                    res.locals.error =  errors.SERVER_ERROR;
+                    res.locals.error =  {
+                        type: errors.SERVER_ERROR,
+                        msg: 'Internal Server Error'
+                    };
                     next()
                 });
         })
         .catch(err => {
-            res.locals.error =  errors.BAD_REQUEST;
+            res.locals.error =  {
+                type: errors.BAD_REQUEST,
+                msg: 'Invalid Body Formate'
+            };
             next()
         });
 }

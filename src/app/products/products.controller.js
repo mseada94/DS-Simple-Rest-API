@@ -16,7 +16,10 @@ const getAll = (req, res, next) => {
             res.locals.data = result;
             next();
         }).catch(err => {
-            res.locals.error =  errors.SERVER_ERROR;
+            res.locals.error =  {
+                type: errors.SERVER_ERROR,
+                msg: 'Internal Server Error'
+            };
             next()
         });
 }
@@ -38,16 +41,25 @@ const create = (req, res, next) => {
                         res.locals.status = 201;
                         res.locals.data = result;
                     }else{
-                        res.locals.error =  errors.NOT_FOUND;
+                        res.locals.error =  {
+                            type: errors.SERVER_ERROR,
+                            msg: 'Internal Server Error'
+                        };
                     }
                     next();
                 }).catch(err => {
-                    res.locals.error =  errors.SERVER_ERROR;
+                    res.locals.error =  {
+                        type: errors.SERVER_ERROR,
+                        msg: 'Internal Server Error'
+                    };
                     next()
                 });
         })
         .catch(err => {
-            res.locals.error =  errors.BAD_REQUEST;
+            res.locals.error =  {
+                type: errors.BAD_REQUEST,
+                msg: 'Invalid Body Formate'
+            };
             next()
         });
 }
@@ -67,11 +79,17 @@ const get = (req, res, next) => {
                 res.locals.status = 200;
                 res.locals.data = result;
             }else{
-                res.locals.error =  errors.NOT_FOUND;
+                res.locals.error =  {
+                    type: errors.NOT_FOUND,
+                    msg: 'The product is not found'
+                };
             }
             next();
         }).catch(err => {
-            res.locals.error =  errors.SERVER_ERROR;
+            res.locals.error =  {
+                type: errors.SERVER_ERROR,
+                msg: 'Internal Server Error'
+            };
             next()
         });
 }
@@ -94,16 +112,25 @@ const replace = (req, res, next) => {
                         res.locals.status = 200;
                         res.locals.data = result;
                     }else{
-                        res.locals.error =  errors.NOT_FOUND;
+                        res.locals.error =  {
+                            type: errors.NOT_FOUND,
+                            msg: 'The product is not found'
+                        };
                     }
                     next();
                 }).catch(err => {
-                    res.locals.error =  errors.SERVER_ERROR;
+                    res.locals.error =  {
+                        type: errors.SERVER_ERROR,
+                        msg: 'Internal Server Error'
+                    };
                     next()
                 });
         })
         .catch(err => {
-            res.locals.error =  errors.BAD_REQUEST;
+            res.locals.error =  {
+                type: errors.BAD_REQUEST,
+                msg: 'Invalid Body Formate'
+            };
             next()
         });
 }
@@ -126,16 +153,25 @@ const update = (req, res, next) => {
                         res.locals.status = 200;
                         res.locals.data = result;
                     }else{
-                        res.locals.error =  errors.NOT_FOUND;
+                        res.locals.error =  {
+                            type: errors.NOT_FOUND,
+                            msg: 'the product is not found'
+                        };
                     }
                     next();
                 }).catch(err => {
-                    res.locals.error =  errors.SERVER_ERROR;
+                    res.locals.error =  {
+                        type: errors.SERVER_ERROR,
+                        msg: 'Internal Server Error'
+                    };
                     next()
                 });
         })
         .catch(err => {
-            res.locals.error =  errors.BAD_REQUEST;
+            res.locals.error =  {
+                type: errors.BAD_REQUEST,
+                msg: 'Invalid Body Formate'
+            };
             next()
         });
 }
@@ -155,11 +191,17 @@ const remove = (req, res, next) => {
                 res.locals.status = 200;
                 res.locals.data = result;
             }else{
-                res.locals.error =  errors.NOT_FOUND;
+                res.locals.error =  {
+                    type: errors.NOT_FOUND,
+                    msg: 'The product is not found'
+                };
             }
             next();
         }).catch(err => {
-            res.locals.error =  errors.SERVER_ERROR;
+            res.locals.error =  {
+                type: errors.SERVER_ERROR,
+                msg: 'Internal Server Error'
+            };
             next()
         });
 }

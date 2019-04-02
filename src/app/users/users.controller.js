@@ -17,7 +17,10 @@ const getAll = (req, res, next) => {
             res.locals.data = result;
             next();
         }).catch(err => {
-            res.locals.error =  errors.SERVER_ERROR;
+            res.locals.error =  {
+                type: errors.SERVER_ERROR,
+                msg: 'Internal Server Error'
+            };
             next()
         });
 }
@@ -39,137 +42,30 @@ const create = (req, res, next) => {
                         res.locals.status = 201;
                         res.locals.data = result;
                     }else{
-                        res.locals.error =  errors.RESOURCE_DUPLICATED;
+                        res.locals.error =  {
+                            type: errors.BAD_REQUEST,
+                            msg: 'username already exists, please choose an other one'
+                        };
                     }
                     next();
                 }).catch(err => {
-                    res.locals.error =  errors.SERVER_ERROR;
+                    res.locals.error =  {
+                        type: errors.SERVER_ERROR,
+                        msg: 'Internal Server Error'
+                    };
                     next()
                 });
         })
         .catch(err => {
-            res.locals.error =  errors.BAD_REQUEST;
-            next()
-        });
-}
-
-const get = (req, res, next) => {
-    // Skip if error
-    if(res.locals.error) 
-        return next();
-
-    const dbAdapter = res.locals.dbAdapter;
-    const id = req.params.id;
-    const query = req.query;
-
-    service.get(dbAdapter, id, query)
-        .then(result =>{
-            if(result){
-                res.locals.status = 200;
-                res.locals.data = result;
-            }else{
-                res.locals.error =  errors.NOT_FOUND;
-            }
-            next();
-        }).catch(err => {
-            res.locals.error =  errors.SERVER_ERROR;
-            next()
-        });
-}
-
-const replace = (req, res, next) => {
-    // Skip if error
-    if(res.locals.error) 
-        return next();
-
-    const dbAdapter = res.locals.dbAdapter;
-    const data = req.body;
-    const id = req.params.id;
-    const query = req.query;
-
-    Joi.validate(data, schemas.replace)
-        .then(()=>{
-            service.replace(dbAdapter, id, data, query)
-                .then(result =>{
-                    if(result){
-                        res.locals.status = 200;
-                        res.locals.data = result;
-                    }else{
-                        res.locals.error =  errors.NOT_FOUND;
-                    }
-                    next();
-                }).catch(err => {
-                    res.locals.error =  errors.SERVER_ERROR;
-                    next()
-                });
-        })
-        .catch(err => {
-            res.locals.error =  errors.BAD_REQUEST;
-            next()
-        });
-}
-
-const update = (req, res, next) => {
-    // Skip if error
-    if(res.locals.error) 
-        return next();
-
-    const dbAdapter = res.locals.dbAdapter;
-    const data = req.body;
-    const id = req.params.id;
-    const query = req.query;
-
-    Joi.validate(data, schemas.replace)
-        .then(()=>{
-            service.update(dbAdapter, id, data, query)
-                .then(result =>{
-                    if(result){
-                        res.locals.status = 200;
-                        res.locals.data = result;
-                    }else{
-                        res.locals.error =  errors.NOT_FOUND;
-                    }
-                    next();
-                }).catch(err => {
-                    res.locals.error =  errors.SERVER_ERROR;
-                    next()
-                });
-        })
-        .catch(err => {
-            res.locals.error =  errors.BAD_REQUEST;
-            next()
-        });
-}
-
-const remove = (req, res, next) => {
-    // Skip if error
-    if(res.locals.error) 
-        return next();
-
-    const dbAdapter = res.locals.dbAdapter;
-    const id = req.params.id;
-    const query = req.query;
-
-    service.remove(dbAdapter, id, query)
-        .then(result =>{
-            if(result){
-                res.locals.status = 200;
-                res.locals.data = result;
-            }else{
-                res.locals.error =  errors.NOT_FOUND;
-            }
-            next();
-        }).catch(err => {
-            res.locals.error =  errors.SERVER_ERROR;
+                res.locals.error =  {
+                    type: errors.BAD_REQUEST,
+                    msg: 'Invalid Body Formate'
+                };
             next()
         });
 }
 
 module.exports =  {
     create,
-    update,
-    replace,
-    remove,
-    get,
     getAll
 };
