@@ -1,5 +1,7 @@
 const { ObjectID, MongoClient } =require('mongodb');
 
+const isString = x => typeof x === 'string' || x instanceof String;
+
 module.exports = function mongoAdapter(dbUrl, dbName){
     
     let dbClient, db;
@@ -57,10 +59,13 @@ module.exports = function mongoAdapter(dbUrl, dbName){
         }
     }
 
-    const get = async function getDocument(collection, id){
+    const get = async function getDocument(collection, query){
         try {
+            if(isString(query))
+                query = {_id: new ObjectID(query)};
+                
             const result = await db.collection(collection)
-                .findOne({_id: new ObjectID(id)});
+                .findOne(query);
             
             return result;
         } catch(err) {

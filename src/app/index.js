@@ -2,13 +2,16 @@ const express = require('express');
 const compress = require('compression');
 const helmet = require('helmet');
 const cors = require('cors');
+const jwt = require('express-jwt');
 
 const products = require('./products');
+const users = require('./users');
+const auth = require('./auth');
 //const orders = require('./orders');
 
 const responseFormater = require('./util/response.formater');
 
-module.exports =  function app(port, dbAdapter, publicDir) {
+module.exports =  function app(port, secret, dbAdapter, publicDir) {
     const server = express();
 
     // Host the public folder if configured
@@ -24,7 +27,14 @@ module.exports =  function app(port, dbAdapter, publicDir) {
     server.use(express.json());
     server.use(express.urlencoded({ extended: true }));
 
+    // Exctract User informations from Authorization header
+    server.use(jwt({
+        secret,
+        credentialsRequired: false
+      }));
+
     server.use((req,res,next)=>{
+        res.locals.secret = secret;
         res.locals.dbAdapter = dbAdapter;
         next();
     })
@@ -32,6 +42,8 @@ module.exports =  function app(port, dbAdapter, publicDir) {
     // Expose Routes for app components
     const root = express.Router();
     root.use(products);
+    root.use(users);
+    root.use(auth);
     //root.use(orders);
     server.use('/api', root);
 

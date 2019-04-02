@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const service = require('./products.service');
+const service = require('./users.service');
 const schemas = require('./schemas');
 const errors = require('../util/errors');
 
@@ -7,6 +7,7 @@ const getAll = (req, res, next) => {
     // Skip if error
     if(res.locals.error) 
         return next();
+
     const dbAdapter = res.locals.dbAdapter;
     const query = req.query;
 
@@ -38,7 +39,7 @@ const create = (req, res, next) => {
                         res.locals.status = 201;
                         res.locals.data = result;
                     }else{
-                        res.locals.error =  errors.NOT_FOUND;
+                        res.locals.error =  errors.RESOURCE_DUPLICATED;
                     }
                     next();
                 }).catch(err => {
@@ -144,7 +145,7 @@ const remove = (req, res, next) => {
     // Skip if error
     if(res.locals.error) 
         return next();
-        
+
     const dbAdapter = res.locals.dbAdapter;
     const id = req.params.id;
     const query = req.query;

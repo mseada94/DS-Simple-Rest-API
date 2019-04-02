@@ -8,12 +8,13 @@ const app = require('./app');
 const dbUrl = process.env.MONGO_URL || 'mongodb://localhost:27017';
 const dbName = process.env.MONGO_DB_NAME || 'test';
 const port = process.env.PORT || 5000;
+const secret = process.env.SECRET || 'secret';
 
 const dbAdapter = mongoAdapter(dbUrl, dbName);
 
 //if(false)
 dbAdapter.connect().then(async _ =>{
-    app(port, dbAdapter, path.join(__dirname,'../public'));
+    app(port, secret, dbAdapter, path.join(__dirname,'../public'));
 });
 
 if(false)

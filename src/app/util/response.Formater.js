@@ -26,6 +26,10 @@ module.exports = function responseFormater(req, res, next)  {
                 status = 500;
                 msg = 'Internal Server Error';
                 break;
+            case errors.RESOURCE_DUPLICATED:
+                status = 400;
+                msg = 'Resource is Duplicated';
+                break;
             default:
                 status = 500;
                 msg = 'Internal Server Error';

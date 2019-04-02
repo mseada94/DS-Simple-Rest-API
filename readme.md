@@ -26,3 +26,7 @@ npm i mongodb
 ```
 npm i dotenv joi joi-objectid
 ```
+## Install auth tools
+```
+npm install express-jwt jsonwebtoken bcrypt
+```
