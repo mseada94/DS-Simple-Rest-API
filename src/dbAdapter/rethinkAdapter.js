@@ -88,13 +88,17 @@ export default function rethinkAdapter(dbHost, dbPort, dbName){
         }
     }
 
-    const getAll = async function getAllDocument(table, limit = 0, start = 0,){
+    const getAll = async function getAllDocument(table, limit = 0, start = 0){
         try {
-            const result = await r.table(table)
-            .getAll()
-            .skip(start)
-            .limit(limit)
-            .run(dbConnection);
+            let query = r.table(table).getAll();
+
+            if(start)
+                query = query.skip(start);
+
+            if(limit)
+                query = query.limit(limit);
+                
+            const result = await query.run(dbConnection);
             
             return result.toArray();
         } catch(err) {
