@@ -1,6 +1,6 @@
 import { BAD_REQUEST, UNAUTHORIZED, NOT_FOUND, SERVER_ERROR } from '../util/errors';
 
-export default function responseFormater(req, res, next)  {
+export default function responseFormatter(req, res, next)  {
     if(res.locals.data){
         // Formate for good results
         res.status(res.locals.status);

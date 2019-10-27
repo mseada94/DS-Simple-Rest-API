@@ -10,7 +10,7 @@ import products from './products';
 import users from './users';
 import auth from './auth';
 
-import responseFormater from './util/response.formater';
+import responseFormatter from './util/response.formatter';
 
 export default  function app(dbAdapter) {
     const server = express();
@@ -28,7 +28,7 @@ export default  function app(dbAdapter) {
     server.use(json());
     server.use(urlencoded({ extended: true }));
 
-    // Exctract User informations from Authorization header
+    // Extract User information from Authorization header
     server.use(jwt({
         secret,
         credentialsRequired: false
@@ -49,7 +49,7 @@ export default  function app(dbAdapter) {
     server.use('/api', root);
 
     // MiddleWares
-    server.use(responseFormater);
+    server.use(responseFormatter);
 
     server.listen(port || 5000);
 }
