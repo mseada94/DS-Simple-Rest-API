@@ -38,6 +38,9 @@ export default function rethinkAdapter(dbHost, dbPort, dbName){
                 .update(data, {returnChanges:true})
                 .run(dbConnection);
             
+            if(result.replaced === 0)
+                throw new Error("Not Found");
+
             // @ts-ignore
             return result.changes[0].new_val;
         } catch(err) {
@@ -52,6 +55,9 @@ export default function rethinkAdapter(dbHost, dbPort, dbName){
                 .replace({id, ...data}, {returnChanges:true})
                 .run(dbConnection);
             
+            if(result.replaced === 0)
+                throw new Error("Not Found");
+
             // @ts-ignore
             return result.changes[0].new_val;
         } catch(err) {
@@ -66,6 +72,9 @@ export default function rethinkAdapter(dbHost, dbPort, dbName){
                 .delete({returnChanges:true})
                 .run(dbConnection);
             
+            if(result.deleted === 0)
+                throw new Error("Not Found");
+                
             // @ts-ignore
             return result.changes[0].old_val;
         } catch(err) {
@@ -82,7 +91,11 @@ export default function rethinkAdapter(dbHost, dbPort, dbName){
             .filter(filter)
             .run(dbConnection);
             
-            return result.toArray();
+            const date = await result.toArray();
+            if(date.length === 0)
+                throw new Error("Not Found");
+                
+            return date;
         } catch(err) {
             console.log(err);
         }
