@@ -4,19 +4,21 @@ import helmet from 'helmet';
 import cors from 'cors';
 import jwt from 'express-jwt';
 
+import { port, secret, publicPath } from "../config";
+
 import products from './products';
 import users from './users';
 import auth from './auth';
 
 import responseFormater from './util/response.formater';
 
-export default  function app(port, secret, dbAdapter, publicDir) {
+export default  function app(dbAdapter) {
     const server = express();
 
     // Host the public folder if configured
-    if(publicDir){
+    if(publicPath){
         // Host the public folder
-        server.use('/', express.static(publicDir));
+        server.use('/', express.static(publicPath));
     }
     
     // Enable security, CORS, compression, favicon and body parsing
