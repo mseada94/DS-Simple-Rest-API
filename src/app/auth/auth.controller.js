@@ -1,7 +1,7 @@
-const Joi = require('joi');
-const service = require('./auth.service');
-const schemas = require('./schemas');
-const errors = require('../util/errors');
+import Joi from 'joi';
+import * as service from './auth.service';
+import * as  schemas from './schemas';
+import { BAD_REQUEST, UNAUTHORIZED, SERVER_ERROR } from '../util/errors';
 
 const login = (req, res, next) => {
     // Skip if error
@@ -21,14 +21,14 @@ const login = (req, res, next) => {
                         res.locals.data = result;
                     }else{
                         res.locals.error =  {
-                            type: errors.UNAUTHORIZED,
+                            type: UNAUTHORIZED,
                             msg: 'Invalid username and password!'
                         };
                     }
                     next();
                 }).catch(err => {
                     res.locals.error =  {
-                        type: errors.SERVER_ERROR,
+                        type: SERVER_ERROR,
                         msg: 'Internal Server Error'
                     };
                     next()
@@ -36,7 +36,7 @@ const login = (req, res, next) => {
         })
         .catch(err => {
             res.locals.error =  {
-                type: errors.BAD_REQUEST,
+                type: BAD_REQUEST,
                 msg: 'Invalid Body Formate'
             };
             next()
@@ -44,6 +44,6 @@ const login = (req, res, next) => {
 }
 
 
-module.exports =  {
+export  {
     login
 };

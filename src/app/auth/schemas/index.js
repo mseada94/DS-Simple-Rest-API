@@ -1,5 +1,5 @@
-const login = require('./login.schema');
+import login from './login.schema';
 
-module.exports = {
+export {
     login
 };

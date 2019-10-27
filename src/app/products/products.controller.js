@@ -1,7 +1,7 @@
-const Joi = require('joi');
-const service = require('./products.service');
-const schemas = require('./schemas');
-const errors = require('../util/errors');
+import Joi from 'joi';
+import * as service from './products.service';
+import * as schemas from './schemas';
+import { BAD_REQUEST, NOT_FOUND, SERVER_ERROR } from '../util/errors';
 
 const getAll = (req, res, next) => {
     // Skip if error
@@ -17,7 +17,7 @@ const getAll = (req, res, next) => {
             next();
         }).catch(err => {
             res.locals.error =  {
-                type: errors.SERVER_ERROR,
+                type: SERVER_ERROR,
                 msg: 'Internal Server Error'
             };
             next()
@@ -42,14 +42,14 @@ const create = (req, res, next) => {
                         res.locals.data = result;
                     }else{
                         res.locals.error =  {
-                            type: errors.SERVER_ERROR,
+                            type: SERVER_ERROR,
                             msg: 'Internal Server Error'
                         };
                     }
                     next();
                 }).catch(err => {
                     res.locals.error =  {
-                        type: errors.SERVER_ERROR,
+                        type: SERVER_ERROR,
                         msg: 'Internal Server Error'
                     };
                     next()
@@ -57,7 +57,7 @@ const create = (req, res, next) => {
         })
         .catch(err => {
             res.locals.error =  {
-                type: errors.BAD_REQUEST,
+                type: BAD_REQUEST,
                 msg: 'Invalid Body Formate'
             };
             next()
@@ -80,14 +80,14 @@ const get = (req, res, next) => {
                 res.locals.data = result;
             }else{
                 res.locals.error =  {
-                    type: errors.NOT_FOUND,
+                    type: NOT_FOUND,
                     msg: 'The product is not found'
                 };
             }
             next();
         }).catch(err => {
             res.locals.error =  {
-                type: errors.SERVER_ERROR,
+                type: SERVER_ERROR,
                 msg: 'Internal Server Error'
             };
             next()
@@ -113,14 +113,14 @@ const replace = (req, res, next) => {
                         res.locals.data = result;
                     }else{
                         res.locals.error =  {
-                            type: errors.NOT_FOUND,
+                            type: NOT_FOUND,
                             msg: 'The product is not found'
                         };
                     }
                     next();
                 }).catch(err => {
                     res.locals.error =  {
-                        type: errors.SERVER_ERROR,
+                        type: SERVER_ERROR,
                         msg: 'Internal Server Error'
                     };
                     next()
@@ -128,7 +128,7 @@ const replace = (req, res, next) => {
         })
         .catch(err => {
             res.locals.error =  {
-                type: errors.BAD_REQUEST,
+                type: BAD_REQUEST,
                 msg: 'Invalid Body Formate'
             };
             next()
@@ -154,14 +154,14 @@ const update = (req, res, next) => {
                         res.locals.data = result;
                     }else{
                         res.locals.error =  {
-                            type: errors.NOT_FOUND,
+                            type: NOT_FOUND,
                             msg: 'the product is not found'
                         };
                     }
                     next();
                 }).catch(err => {
                     res.locals.error =  {
-                        type: errors.SERVER_ERROR,
+                        type: SERVER_ERROR,
                         msg: 'Internal Server Error'
                     };
                     next()
@@ -169,7 +169,7 @@ const update = (req, res, next) => {
         })
         .catch(err => {
             res.locals.error =  {
-                type: errors.BAD_REQUEST,
+                type: BAD_REQUEST,
                 msg: 'Invalid Body Formate'
             };
             next()
@@ -192,21 +192,21 @@ const remove = (req, res, next) => {
                 res.locals.data = result;
             }else{
                 res.locals.error =  {
-                    type: errors.NOT_FOUND,
+                    type: NOT_FOUND,
                     msg: 'The product is not found'
                 };
             }
             next();
         }).catch(err => {
             res.locals.error =  {
-                type: errors.SERVER_ERROR,
+                type: SERVER_ERROR,
                 msg: 'Internal Server Error'
             };
             next()
         });
 }
 
-module.exports =  {
+export {
     create,
     update,
     replace,

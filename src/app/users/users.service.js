@@ -25,7 +25,7 @@ const getAll = async function getAllFn(dbAdapter, query = {}){
     }
 }
 
-module.exports= {
+export {
     create,
     getAll
 };

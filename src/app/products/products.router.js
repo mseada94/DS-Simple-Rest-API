@@ -1,18 +1,18 @@
-const express = require('express');
-const controller = require('./products.controller');
+import { Router } from 'express';
+import * as products from './products.controller';
 
 const resource = '/products';
-const router = express.Router();
+const router = Router();
 
 
 router.route(resource)
-    .get(controller.getAll)
-    .post(controller.create);
+    .get(products.getAll)
+    .post(products.create);
 
 router.route(resource + '/:id')
-    .get(controller.get)
-    .put(controller.replace)
-    .patch(controller.update)
-    .delete(controller.remove);
+    .get(products.get)
+    .put(products.replace)
+    .patch(products.update)
+    .delete(products.remove);
 
-module.exports =  router;
+export default  router;

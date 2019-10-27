@@ -1,5 +1,5 @@
-const create = require('./create.schema');
+import create from './create.schema';
 
-module.exports = {
+export {
     create
 };

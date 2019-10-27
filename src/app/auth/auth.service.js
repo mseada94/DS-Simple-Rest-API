@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+import { sign } from 'jsonwebtoken';
+import { compare } from 'bcrypt';
 
 const document = 'users';
 
@@ -12,7 +12,7 @@ const login = async function loginFn(dbAdapter, data, secret){
 
         if(user){
 
-            const res = await bcrypt.compare(password, user.password);
+            const res = await compare(password, user.password);
             if (res) {
 
                 // SIGNING OPTIONS
@@ -29,7 +29,7 @@ const login = async function loginFn(dbAdapter, data, secret){
                     role:user.role
                 }
 
-                const token = jwt.sign(payload, secret, signOptions);
+                const token = sign(payload, secret, signOptions);
                 
                 return {
                     token
@@ -41,6 +41,6 @@ const login = async function loginFn(dbAdapter, data, secret){
     }
 }
 
-module.exports = {
+export {
     login
 };

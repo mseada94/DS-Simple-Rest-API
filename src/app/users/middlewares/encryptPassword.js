@@ -1,15 +1,15 @@
-const bcrypt = require('bcrypt');
-const errors = require('../../util/errors');
+import { hash as _hash } from 'bcrypt';
+import { SERVER_ERROR } from '../../util/errors';
 
-module.exports = function encryptPassword(req, res, next){
+export default function encryptPassword(req, res, next){
     const password = req.body.password;
     if(password){
-        bcrypt.hash(password, 10).then(hash=>{
+        _hash(password, 10).then(hash=>{
             req.body.password = hash;
             next();
         }).catch(err=>{
             res.locals.error =  {
-                type: errors.SERVER_ERROR,
+                type: SERVER_ERROR,
                 msg: 'Internal Server Error'
             };
         });

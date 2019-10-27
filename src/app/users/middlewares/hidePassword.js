@@ -1,4 +1,4 @@
-module.exports = function hidePassword(req, res, next){
+export default function hidePassword(req, res, next){
     const users = res.locals.data;
     if(users){
         if(Array.isArray(users.data)){

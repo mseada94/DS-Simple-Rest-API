@@ -1,5 +1,5 @@
-const role = require('./roles');
+import { roles } from './roles';
 
-module.exports = {
-    role
+export {
+    roles
 };

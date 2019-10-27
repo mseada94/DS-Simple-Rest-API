@@ -1,9 +1,9 @@
-const Joi = require('joi');
-const service = require('./users.service');
-const schemas = require('./schemas');
-const errors = require('../util/errors');
+import { validate } from 'joi';
+import * as service from './users.service';
+import * as schemas from './schemas';
+import { BAD_REQUEST, SERVER_ERROR } from '../util/errors';
 
-const getAll = (req, res, next) => {
+export const getAll = (req, res, next) => {
     // Skip if error
     if(res.locals.error) 
         return next();
@@ -18,14 +18,14 @@ const getAll = (req, res, next) => {
             next();
         }).catch(err => {
             res.locals.error =  {
-                type: errors.SERVER_ERROR,
+                type: SERVER_ERROR,
                 msg: 'Internal Server Error'
             };
             next()
         });
 }
 
-const create = (req, res, next) => {
+export const create = (req, res, next) => {
     // Skip if error
     if(res.locals.error) 
         return next();
@@ -34,7 +34,7 @@ const create = (req, res, next) => {
     const data = req.body;
     const query = req.query;
 
-    Joi.validate(data, schemas.create)
+    validate(data, schemas.create)
         .then(()=>{
             service.create(dbAdapter, data, query)
                 .then(result =>{
@@ -43,14 +43,14 @@ const create = (req, res, next) => {
                         res.locals.data = result;
                     }else{
                         res.locals.error =  {
-                            type: errors.BAD_REQUEST,
+                            type: BAD_REQUEST,
                             msg: 'username already exists, please choose an other one'
                         };
                     }
                     next();
                 }).catch(err => {
                     res.locals.error =  {
-                        type: errors.SERVER_ERROR,
+                        type: SERVER_ERROR,
                         msg: 'Internal Server Error'
                     };
                     next()
@@ -58,14 +58,9 @@ const create = (req, res, next) => {
         })
         .catch(err => {
                 res.locals.error =  {
-                    type: errors.BAD_REQUEST,
+                    type: BAD_REQUEST,
                     msg: 'Invalid Body Formate'
                 };
             next()
         });
 }
-
-module.exports =  {
-    create,
-    getAll
-};

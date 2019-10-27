@@ -1,9 +1,10 @@
 // Load environment variable from .env file
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
-const path = require('path');
-const mongoAdapter = require('./dbAdapter/mongoAdapter');
-const app = require('./app');
+import path from "path";
+import mongoAdapter from './dbAdapter/mongoAdapter';
+import app from './app';
 
 const dbUrl = process.env.MONGO_URL || 'mongodb://localhost:27017';
 const dbName = process.env.MONGO_DB_NAME || 'test';
@@ -12,31 +13,9 @@ const secret = process.env.SECRET || 'secret';
 
 const dbAdapter = mongoAdapter(dbUrl, dbName);
 
-//if(false)
-dbAdapter.connect().then(async _ =>{
+async function main(){
+    await dbAdapter.connect()
     app(port, secret, dbAdapter, path.join(__dirname,'../public'));
-});
+}
 
-if(false)
-dbAdapter.connect().then(async _ =>{
-    let res;
-    res = await dbAdapter.getAll('stores',3, 5);
-    console.log(res);
-
-    res = await dbAdapter.insert('stores', {name:'test'});
-    console.log(res);
-
-    res = await  dbAdapter.get('stores', res._id);
-    console.log(res);
-    
-    res = await dbAdapter.update('stores', res._id, {name:'updated'});
-    console.log(res);
-
-    res = await dbAdapter.replace('stores', res._id, {title:'replaced'});
-    console.log(res);
-
-    res = await  dbAdapter.remove('stores', res._id);
-    console.log(res);
-    
-    dbAdapter.close();
-});
+main();

@@ -1,17 +1,16 @@
-const express = require('express');
-const compress = require('compression');
-const helmet = require('helmet');
-const cors = require('cors');
-const jwt = require('express-jwt');
+import express, { json, urlencoded, Router } from 'express';
+import compress from 'compression';
+import helmet from 'helmet';
+import cors from 'cors';
+import jwt from 'express-jwt';
 
-const products = require('./products');
-const users = require('./users');
-const auth = require('./auth');
-//const orders = require('./orders');
+import products from './products';
+import users from './users';
+import auth from './auth';
 
-const responseFormater = require('./util/response.formater');
+import responseFormater from './util/response.formater';
 
-module.exports =  function app(port, secret, dbAdapter, publicDir) {
+export default  function app(port, secret, dbAdapter, publicDir) {
     const server = express();
 
     // Host the public folder if configured
@@ -24,8 +23,8 @@ module.exports =  function app(port, secret, dbAdapter, publicDir) {
     server.use(helmet());
     server.use(cors());
     server.use(compress());
-    server.use(express.json());
-    server.use(express.urlencoded({ extended: true }));
+    server.use(json());
+    server.use(urlencoded({ extended: true }));
 
     // Exctract User informations from Authorization header
     server.use(jwt({
@@ -40,11 +39,11 @@ module.exports =  function app(port, secret, dbAdapter, publicDir) {
     })
     
     // Expose Routes for app components
-    const root = express.Router();
+    const root = Router();
     root.use(products);
     root.use(users);
     root.use(auth);
-    //root.use(orders);
+    
     server.use('/api', root);
 
     // MiddleWares

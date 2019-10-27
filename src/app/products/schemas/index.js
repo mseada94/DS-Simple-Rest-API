@@ -1,8 +1,8 @@
-const create = require('./create.schema');
-const update = require('./update.schema');
-const replace = require('./replace.schema');
+import create from './create.schema';
+import update from './update.schema';
+import replace from './replace.schema';
 
-module.exports = {
+export {
     create,
     update,
     replace

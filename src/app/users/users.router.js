@@ -1,20 +1,20 @@
-const express = require('express');
-const controller = require('./users.controller');
-const { hidePassword, encryptPassword } = require('./middlewares');
-const { role } = require('../auth/middlewares');
+import { Router } from 'express';
+import { getAll, create } from './users.controller';
+import { hidePassword, encryptPassword } from './middlewares';
+import { roles } from '../auth/middlewares';
 const resource = '/users';
 
-const router = express.Router();
-const route = express.Router();
+const router = Router();
+const route = Router();
 
 route.use(encryptPassword);
 
 route.route('')
-    .get(role('admin'), controller.getAll)
-    .post(controller.create);
+    .get(roles('admin'), getAll)
+    .post(create);
 
 route.use(hidePassword);
 
 router.use(resource, route);
 
-module.exports =  router;
+export default  router;

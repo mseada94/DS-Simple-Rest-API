@@ -1,6 +1,6 @@
-const errors = require('../util/errors');
+import { BAD_REQUEST, UNAUTHORIZED, NOT_FOUND, SERVER_ERROR } from '../util/errors';
 
-module.exports = function responseFormater(req, res, next)  {
+export default function responseFormater(req, res, next)  {
     if(res.locals.data){
         // Formate for good results
         res.status(res.locals.status);
@@ -10,19 +10,19 @@ module.exports = function responseFormater(req, res, next)  {
         let status,msg;
 
         switch (res.locals.error.type) {
-            case errors.BAD_REQUEST:
+            case BAD_REQUEST:
                 status = 400;
                 msg = res.locals.error.msg;
                 break;
-            case errors.UNAUTHORIZED:
+            case UNAUTHORIZED:
                 status = 401;
                 msg = res.locals.error.msg;
                 break;
-            case errors.NOT_FOUND:
+            case NOT_FOUND:
                 status = 404;
                 msg = res.locals.error.msg;
                 break;
-            case errors.SERVER_ERROR:
+            case SERVER_ERROR:
                 status = 500;
                 msg = res.locals.error.msg;
                 break;

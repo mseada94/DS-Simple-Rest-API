@@ -1,8 +1,8 @@
-const { ObjectID, MongoClient } =require('mongodb');
+import { ObjectID, MongoClient } from 'mongodb';
 
 const isString = x => typeof x === 'string' || x instanceof String;
 
-module.exports = function mongoAdapter(dbUrl, dbName){
+export default function mongoAdapter(dbUrl, dbName){
     
     let dbClient, db;
     

@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
 const createSchema = Joi.object().keys({
     username: Joi.string().min(3).max(30).required(),
@@ -6,4 +6,4 @@ const createSchema = Joi.object().keys({
     role: Joi.string().required()
 });
 
-module.exports = createSchema;
+export default createSchema;

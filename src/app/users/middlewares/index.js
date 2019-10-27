@@ -1,7 +1,7 @@
-const hidePassword = require('./hidePassword');
-const encryptPassword = require('./encryptPassword');
+import hidePassword from './hidePassword';
+import encryptPassword from './encryptPassword';
 
-module.exports = {
+export {
     hidePassword,
     encryptPassword
-};
+}
