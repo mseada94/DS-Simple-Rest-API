@@ -1,4 +1,4 @@
-# Express Rest API with MongoDB
+# Simple Express Rest API
 
 ## Start App
 ### Install npm dependencies
