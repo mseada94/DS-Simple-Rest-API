@@ -103,7 +103,7 @@ export default function rethinkAdapter(dbHost, dbPort, dbName){
 
     const getAll = async function getAllDocument(table, limit = 0, start = 0){
         try {
-            let query = r.table(table).getAll();
+            let query = r.table(table).filter(r.expr(true));
 
             if(start)
                 query = query.skip(start);
@@ -112,8 +112,9 @@ export default function rethinkAdapter(dbHost, dbPort, dbName){
                 query = query.limit(limit);
                 
             const result = await query.run(dbConnection);
-            
-            return result.toArray();
+            const data = await result.toArray();
+
+            return data;
         } catch(err) {
             console.log(err);
         }
