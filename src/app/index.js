@@ -7,6 +7,7 @@ import jwt from 'express-jwt';
 import { port, secret, publicPath } from "../config";
 
 import products from './products';
+import students from './students';
 import users from './users';
 import auth from './auth';
 
@@ -43,6 +44,7 @@ export default  function app(dbAdapter) {
     // Expose Routes for app components
     const root = Router();
     root.use(products);
+    root.use(students);
     root.use(users);
     root.use(auth);
     
