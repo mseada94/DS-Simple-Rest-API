@@ -16,7 +16,7 @@
     "dotenv": "^7.0.0",
     "esm": "^3.2.25",
     "express": "^4.16.4",
-    "express-jwt": "^5.3.1",
+    "express-jwt": "^6.0.0",
     "helmet": "^3.21.2",
     "joi": "^14.3.1",
     "joi-objectid": "^2.0.0",
